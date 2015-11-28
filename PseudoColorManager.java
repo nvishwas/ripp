@@ -63,10 +63,43 @@ public class PseudoColorManager {
         	for (int j=0; j <  height; j++) {
         		c  = new Color(biImage.getRGB(i, j));
         		r = (int)(c.getRed() * 0.299);
-                g = (int)(c.getGreen() * 0.587);
-                b = (int)(c.getBlue() *0.114);       		
-        		nc = new Color(r,g,b);
+                        g = (int)(c.getGreen() * 0.587);
+                	b = (int)(c.getBlue() *0.114);       		
         		
+        		if (0 <= c.getRed() && c.getRed() < 32) {   		
+        			r = 0;
+        			g = 0;
+        			b = 0;
+        		} else if (32 <= c.getRed() && c.getRed() < 64) {
+        			r = 255;
+        			g = 0;
+        			b = 0;        			
+        		} else if (64 <= c.getRed() && c.getRed() < 96) {
+        			r = 255;
+        			g = 0;
+        			b = 255;        			
+        		} else if (96 <= c.getRed() && c.getRed() < 128) {
+        			r = 0;
+        			g = 0;
+        			b = 255;        			
+        		} else if (128 <= c.getRed() && c.getRed() < 160) {
+        			r = 0;
+        			g = 255;
+        			b = 255;        			 			
+        		} else if (160 <= c.getRed() && c.getRed() < 192) {
+        			r = 0;
+        			g = 255;
+        			b = 0;      
+        		} else if (192 <= c.getRed() && c.getRed() < 224) {
+        			r = 255;
+        			g = 255;
+        			b = 0;        			
+        		} else {
+        			r = 255;
+        			g = 255;
+        			b = 255;        			
+        		}
+			nc = new Color(r,g,b);
         		clone.setRGB(i, j, nc.getRGB());
         	}
         }
