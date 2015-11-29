@@ -1,0 +1,21 @@
+package rip;
+
+public class PseudoColorTest {
+    /** 
+     * A test class to test the PseudoColorManager class 
+     * @param args
+     */
+	public static void main(String args[]) {
+		int iter, i;
+		PseudoColorManager colorImage  = new PseudoColorManager("D:\\RIP\\project\\images\\Test.jpeg");
+		
+		/* Read number of coloring schemes supported */
+		iter = colorImage.getColorTypes();
+		
+		/* Loop through different coloring schemes and display them*/
+		for (i = 0; i < iter; i++) {
+			colorImage.addColor(i);
+			colorImage.showImage(""+i);
+		}		
+	}
+}
