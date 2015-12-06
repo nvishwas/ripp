@@ -1,4 +1,4 @@
-package rip;
+//package rip;
 import javax.imageio.*;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,7 +22,14 @@ public class PseudoColorManager {
 	int width;
     int height;
 	int colorTypes = 4;
-
+    ///*
+	double freq = 4;
+    double phase = 2;
+    //*/
+   /*
+    double freq = 2* Math.PI;
+    double phase = Math.PI;
+    */
 	public PseudoColorManager(String pathname) {
 		
 		/* Read the input file */
@@ -47,7 +54,7 @@ public class PseudoColorManager {
 	}
 	
 	/* Create a frame and display the requested image */
-	public void showImage(String image) {
+	public void showImage(String image, String suffix) {
 	    
 		ImageIcon  icon;
         JLabel jLabel;
@@ -56,16 +63,16 @@ public class PseudoColorManager {
         	jLabel = new JLabel(image);
         	icon = new ImageIcon(biImage);	
         } else if (image.equals("0")) {
-        	jLabel = new JLabel("output" + image);
+        	jLabel = new JLabel("output" + image + suffix);
         	icon = new ImageIcon(opImage1);
         } else if (image.equals("1")) {
-        	jLabel = new JLabel("output" + image);
+        	jLabel = new JLabel("output" + image+ suffix);
         	icon = new ImageIcon(opImage2);
         } else if (image.equals("2")) {
-        	jLabel = new JLabel("output" + image);
+        	jLabel = new JLabel("output" + image+ suffix);
         	icon = new ImageIcon(opImage3);
         } else if (image.equals("3")) {
-        	jLabel = new JLabel("output" + image);
+        	jLabel = new JLabel("output" + image+ suffix);
         	icon = new ImageIcon(opImage4);
         } else {
         	jLabel = new JLabel("Invalid option");
@@ -87,6 +94,15 @@ public class PseudoColorManager {
 		return colorTypes;
 	}
 	
+	public double getFrequency ()
+	{
+		return freq;
+	}
+	
+	public double getPhase ()
+	{
+		return phase;
+	}
 	public void addColor(int i) {
 		switch(i){
 		case 0:
@@ -187,15 +203,21 @@ public class PseudoColorManager {
 	private void addColor3() {
         int r, g, b;
         Color nc, c;
-        
+    	@SuppressWarnings("unused")
+		int red;
         for (int i=0; i < width ; i++) {
         	for (int j=0; j <  height; j++) {
         		c  = new Color(biImage.getRGB(i, j));
-        		r = (int)(255* Math.abs(Math.sin(c.getRed() * 2 * Math.PI / 255)));
-                g = (int)(255* Math.abs(Math.sin(c.getGreen() * 2 * Math.PI / 255 + Math.PI/3)));
-                b = (int)(255* Math.abs(Math.sin(c.getBlue() * 2 * Math.PI / 255 + Math.PI/2)));       		
+        		r = (int)(255* Math.abs(Math.sin(c.getRed() * freq / 255)));
+                g = (int)(255* Math.abs(Math.sin(c.getGreen() * freq / 255 + phase/3)));
+                b = (int)(255* Math.abs(Math.sin(c.getBlue() * freq  / 255  + phase/2)));       		
+        		//r = (int)(255* Math.abs(Math.sin(c.getRed() * 2 * Math.PI / 255)));
+                //g = (int)(255* Math.abs(Math.sin(c.getGreen() * 2 * Math.PI / 255 + Math.PI/3)));
+                //b = (int)(255* Math.abs(Math.sin(c.getBlue() * 2 * Math.PI / 255 + Math.PI/2))); 
         		nc = new Color(r,g,b);
         		
+        		nc = new Color(r,g,b);
+        		red = c.getRed();
         		opImage3.setRGB(i, j, nc.getRGB());
         	}
         }
@@ -205,15 +227,21 @@ public class PseudoColorManager {
 	private void addColor4() {
         int r, g, b;
         Color nc, c;
-        
+    	@SuppressWarnings("unused")
+		int red;
         for (int i=0; i < width ; i++) {
         	for (int j=0; j <  height; j++) {
         		c  = new Color(biImage.getRGB(i, j));
+        	//	r = (int)(255* Math.abs(Math.cos(c.getRed() * 2 * Math.PI * freq )));
+            //    g = (int)(255* Math.abs(Math.cos(c.getGreen() * 2 * Math.PI * freq + phase/3)));
+            //    b = (int)(255* Math.abs(Math.cos(c.getBlue() * 2 * Math.PI * freq + phase/2)));       		
+        	
         		r = (int)(255* Math.abs(Math.cos(c.getRed() * 2 * Math.PI / 255)));
                 g = (int)(255* Math.abs(Math.cos(c.getGreen() * 2 * Math.PI / 255 + Math.PI/3)));
-                b = (int)(255* Math.abs(Math.cos(c.getBlue() * 2 * Math.PI / 255 + Math.PI/2)));       		
-        		nc = new Color(r,g,b);
-        		
+                b = (int)(255* Math.abs(Math.cos(c.getBlue() * 2 * Math.PI / 255 + Math.PI/2))); 	
+        	
+        		red = c.getRed();
+        		nc = new Color(r,g,b);        		
         		opImage4.setRGB(i, j, nc.getRGB());
         	}
         }
